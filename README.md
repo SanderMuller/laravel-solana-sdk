@@ -1,10 +1,24 @@
 # Laravel Solana SDK
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/sandermuller/laravel-solana-sdk.svg?style=flat-square)](https://packagist.org/packages/sandermuller/laravel-solana-sdk)
+[![Tests](https://img.shields.io/github/actions/workflow/status/SanderMuller/laravel-solana-sdk/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/SanderMuller/laravel-solana-sdk/actions/workflows/run-tests.yml)
+[![PHPStan](https://img.shields.io/github/actions/workflow/status/SanderMuller/laravel-solana-sdk/phpstan.yml?branch=main&label=phpstan&style=flat-square)](https://github.com/SanderMuller/laravel-solana-sdk/actions/workflows/phpstan.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/sandermuller/laravel-solana-sdk.svg?style=flat-square)](https://packagist.org/packages/sandermuller/laravel-solana-sdk)
+[![License](https://img.shields.io/packagist/l/sandermuller/laravel-solana-sdk.svg?style=flat-square)](LICENSE)
+
 Laravel wrapper around [`sandermuller/solana-php-sdk`][core] — service
 provider, facades, env-driven config, and artisan commands so you can
 call Solana RPC from a Laravel app without wiring containers yourself.
 
 [core]: https://github.com/SanderMuller/solana-php-sdk
+
+```php
+use SanderMuller\LaravelSolanaSdk\Facades\Solana;
+
+$balance   = Solana::getBalance('SomeWalletAddressBase58'); // lamports as float
+$blockhash = Solana::latestBlockhash();                     // typed BlockhashInfo
+$status    = Solana::sendAndConfirmTransaction($tx, [$payer]);
+```
 
 ## Contents
 
@@ -19,6 +33,7 @@ call Solana RPC from a Laravel app without wiring containers yourself.
 - [Testing](#testing)
 - [Upgrading](#upgrading)
 - [Changelog](#changelog)
+- [Contributing](#contributing)
 - [Security](#security)
 - [Credits](#credits)
 - [License](#license)
@@ -260,6 +275,24 @@ See [UPGRADING.md](UPGRADING.md).
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md). Updated automatically on release publish.
+
+## Contributing
+
+PRs welcome. Run the local gauntlet before opening one:
+
+```bash
+vendor/bin/pest          # tests
+vendor/bin/pint --test   # style
+vendor/bin/phpstan       # static analysis
+vendor/bin/rector --dry-run
+```
+
+The package is intentionally a **thin** wrapper — net-new RPC methods,
+program builders, and DTOs belong in
+[`sandermuller/solana-php-sdk`][core]. The wrapper only adds Laravel
+glue (`@method` lines on the `Solana` facade, env-driven config keys,
+container bindings, `solana:*` commands). See
+[`CLAUDE.md`](CLAUDE.md) for the full scope rules.
 
 ## Security
 
