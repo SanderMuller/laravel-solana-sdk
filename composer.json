@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^8.3",
-        "sandermuller/solana-php-sdk": "dev-main",
+        "sandermuller/solana-php-sdk": "^0.1.0",
         "illuminate/console": "^11.0||^12.0||^13.0",
         "illuminate/contracts": "^11.0||^12.0||^13.0",
         "illuminate/support": "^11.0||^12.0||^13.0"
@@ -43,12 +43,6 @@
         "tomasvotruba/cognitive-complexity": "^1.1",
         "tomasvotruba/type-coverage": "^2.1"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/SanderMuller/solana-php-sdk"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "SanderMuller\\LaravelSolanaSdk\\": "src/"
@@ -102,6 +96,6 @@
             "phpstan/extension-installer": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

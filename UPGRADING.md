@@ -1,13 +1,5 @@
 # Upgrading
 
-## Pre-1.0 development
-
-The package tracks `sandermuller/solana-php-sdk` `dev-main` via a
-`vcs` repository entry until the core SDK has a tagged stable release.
-Once core ships `^0.1`, switch the constraint in `composer.json` from
-`"sandermuller/solana-php-sdk": "dev-main"` to the pinned tag and drop
-the `repositories` + `minimum-stability: dev` entries.
-
 ## Per-release migration steps
 
 ### Unreleased
