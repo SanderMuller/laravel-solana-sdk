@@ -1,21 +1,12 @@
 # Upgrading
 
-## Pre-release tasks before tagging v0.1.0
+## Pre-1.0 development
 
-The package is currently in `v0.x` development against an unreleased
-`sandermuller/solana-php-sdk` checkout. Before publishing to Packagist:
-
-1. **Tag `sandermuller/solana-php-sdk`** (e.g. `0.1.0`) and publish it to
-   Packagist.
-2. **Pin the core SDK constraint** in `composer.json` to that tag, e.g.
-   `"sandermuller/solana-php-sdk": "^0.1"` instead of `"*@dev"`.
-3. **Remove the `repositories` block** from `composer.json` (the local
-   `path` repository to `../solana-php-sdk` is only honoured when this
-   package is the root project — downstream consumers do not inherit
-   it, so leaving it in the published manifest is dead config and
-   confusing for contributors who don't have the sibling checkout).
-4. **Update `composer.json` minimum-stability** if needed — `stable`
-   should work once the core SDK has a tagged stable release.
+The package tracks `sandermuller/solana-php-sdk` `dev-main` via a
+`vcs` repository entry until the core SDK has a tagged stable release.
+Once core ships `^0.1`, switch the constraint in `composer.json` from
+`"sandermuller/solana-php-sdk": "dev-main"` to the pinned tag and drop
+the `repositories` + `minimum-stability: dev` entries.
 
 ## Per-release migration steps
 
