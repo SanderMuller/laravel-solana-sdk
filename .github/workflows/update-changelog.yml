@@ -1,0 +1,29 @@
+name: update-changelog
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: stefanzweifel/changelog-updater-action@v1
+        with:
+          latest-version: ${{ github.event.release.name }}
+          release-notes: ${{ github.event.release.body }}
+
+      - uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          branch: main
+          commit_message: "docs: update changelog for ${{ github.event.release.tag_name }}"
+          file_pattern: CHANGELOG.md

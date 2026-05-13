@@ -1,0 +1,33 @@
+name: pint-check
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    paths:
+      - '**.php'
+      - 'pint.json'
+      - '.github/workflows/pint-check.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: dom, curl, libxml, mbstring, zip
+          coverage: none
+
+      - run: composer update --prefer-dist --no-interaction
+
+      - run: vendor/bin/pint --test

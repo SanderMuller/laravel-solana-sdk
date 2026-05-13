@@ -1,0 +1,59 @@
+name: run-tests
+
+permissions:
+  contents: read
+
+on:
+  push:
+    paths:
+      - '**.php'
+      - '.github/workflows/run-tests.yml'
+      - 'phpunit.xml.dist'
+      - 'composer.json'
+  pull_request:
+    paths:
+      - '**.php'
+      - '.github/workflows/run-tests.yml'
+      - 'phpunit.xml.dist'
+      - 'composer.json'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { php: '8.3', laravel: '11.*', testbench: '9.*',  stability: prefer-lowest }
+          - { php: '8.4', laravel: '13.*', testbench: '11.*', stability: prefer-stable }
+          - { php: '8.4', laravel: '12.*', testbench: '10.*', stability: prefer-stable }
+          - { php: '8.3', laravel: '13.*', testbench: '11.*', stability: prefer-stable }
+
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, sodium, sqlite
+          coverage: none
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+
+      - name: List installed dependencies
+        run: composer show -D
+
+      - name: Execute tests
+        run: vendor/bin/pest --ci

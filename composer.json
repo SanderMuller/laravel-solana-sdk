@@ -1,0 +1,110 @@
+{
+    "name": "sandermuller/laravel-solana-sdk",
+    "description": "Laravel wrapper for sandermuller/solana-php-sdk — service provider, facades, env-driven config, and artisan commands for Solana RPC.",
+    "keywords": ["laravel", "solana", "sdk", "rpc", "blockchain", "facade", "package"],
+    "homepage": "https://github.com/SanderMuller/laravel-solana-sdk",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sander Muller",
+            "email": "github@scode.nl",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "sandermuller/solana-php-sdk": "*@dev",
+        "illuminate/console": "^11.0||^12.0||^13.0",
+        "illuminate/contracts": "^11.0||^12.0||^13.0",
+        "illuminate/support": "^11.0||^12.0||^13.0"
+    },
+    "require-dev": {
+        "dg/bypass-finals": "^1.9",
+        "driftingly/rector-laravel": "^2.3",
+        "larastan/larastan": "^3.9.3",
+        "laravel/pint": "^1.29",
+        "mockery/mockery": "^1.6",
+        "mrpunyapal/rector-pest": "^0.2.7",
+        "nunomaduro/collision": "^8.0",
+        "orchestra/testbench": "^9.0||^10.0||^11.0",
+        "pestphp/pest": "^3.0||^4.0",
+        "pestphp/pest-plugin-arch": "^3.0||^4.0",
+        "pestphp/pest-plugin-laravel": "^3.0||^4.0",
+        "phpstan/extension-installer": "^1.4.3",
+        "phpstan/phpstan-deprecation-rules": "^2.0.4",
+        "phpstan/phpstan-phpunit": "^2.0.16",
+        "phpstan/phpstan-strict-rules": "^2.0.10",
+        "rector/rector": "^2.4.1",
+        "rector/type-perfect": "^2.1.2",
+        "sandermuller/package-boost": "^0.15.0",
+        "spaze/phpstan-disallowed-calls": "^4.10",
+        "symplify/phpstan-extensions": "^12.0.2",
+        "tomasvotruba/cognitive-complexity": "^1.1",
+        "tomasvotruba/type-coverage": "^2.1"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../solana-php-sdk",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SanderMuller\\LaravelSolanaSdk\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SanderMuller\\LaravelSolanaSdk\\Tests\\": "tests/",
+            "SanderMuller\\LaravelSolanaSdk\\Tests\\Support\\": "tests/Support/",
+            "Workbench\\App\\": "workbench/app/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@sync-ai"
+        ],
+        "phpstan": "vendor/bin/phpstan analyse --memory-limit=2G",
+        "phpstan-simplified": "vendor/bin/phpstan analyse --memory-limit=2G --error-format symplify",
+        "phpstan-clear-cache": "vendor/bin/phpstan clear-result-cache",
+        "format": "vendor/bin/pint",
+        "format-test": "vendor/bin/pint --test",
+        "rector": "vendor/bin/rector process",
+        "rector-dry-run": "vendor/bin/rector process --dry-run",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "sync-ai": "vendor/bin/testbench package-boost:sync || true",
+        "qa": [
+            "@rector",
+            "@format",
+            "@phpstan-simplified"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SanderMuller\\LaravelSolanaSdk\\LaravelSolanaSdkServiceProvider"
+            ],
+            "aliases": {
+                "Solana": "SanderMuller\\LaravelSolanaSdk\\Facades\\Solana",
+                "SolanaRpc": "SanderMuller\\LaravelSolanaSdk\\Facades\\SolanaRpc"
+            },
+            "dont-discover": [
+                "sandermuller/solana-php-sdk"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
