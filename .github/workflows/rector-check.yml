@@ -4,11 +4,21 @@ permissions:
   contents: read
 
 on:
+  push:
+    paths:
+      - '**.php'
+      - 'rector.php'
+      - 'composer.json'
+      - 'composer.lock'
+      - '.github/workflows/rector-check.yml'
   pull_request:
     paths:
       - '**.php'
       - 'rector.php'
+      - 'composer.json'
+      - 'composer.lock'
       - '.github/workflows/rector-check.yml'
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

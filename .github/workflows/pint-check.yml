@@ -4,11 +4,21 @@ permissions:
   contents: read
 
 on:
+  push:
+    paths:
+      - '**.php'
+      - 'pint.json'
+      - 'composer.json'
+      - 'composer.lock'
+      - '.github/workflows/pint-check.yml'
   pull_request:
     paths:
       - '**.php'
       - 'pint.json'
+      - 'composer.json'
+      - 'composer.lock'
       - '.github/workflows/pint-check.yml'
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
