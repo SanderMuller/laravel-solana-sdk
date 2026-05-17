@@ -34,6 +34,9 @@ See the [README](README.md) for facade examples, transport configuration, and th
 
 ### Added
 
+- **`SanderMuller\LaravelSolanaSdk\Queue\ConfirmTransactionJob`**:
+  moved from solana-php-sdk where it didn't fit (the SDK is
+  framework-agnostic in intent; a Laravel Queue Job belongs here).
 - `transport` config block — env-driven multi-endpoint stack
   (`SOLANA_RPC_URL`, `SOLANA_RPC_URL_FALLBACK`, `SOLANA_TRANSPORT_MODE`,
   retry knobs). The service provider hands the array to the core SDK's
@@ -53,6 +56,8 @@ See the [README](README.md) for facade examples, transport configuration, and th
 
 - `config/solana-sdk.php` published key set grew from three to four
   knobs (added `transport`).
+- Bumped `sandermuller/solana-php-sdk` to `^0.2.0` (the SDK release
+  that completed the move of Facade + Job to this wrapper).
 
 ## 0.0.x
 
