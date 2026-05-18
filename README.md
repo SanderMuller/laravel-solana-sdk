@@ -172,14 +172,15 @@ the array straight to `SanderMuller\SolanaPhpSdk\Rpc\TransportFactory`.
 
 ## Confirming transactions on the queue
 
-The core SDK ships `SanderMuller\SolanaPhpSdk\Queue\ConfirmTransactionJob`
+This wrapper ships `SanderMuller\LaravelSolanaSdk\Queue\ConfirmTransactionJob`
 out of the box. Dispatch it after `sendTransaction` so the long-tail
 confirmation phase becomes a background job that fires
-`TransactionConfirmed` / `TransactionExpired` events:
+`TransactionConfirmed` / `TransactionExpired` events (the event classes
+live in the SDK):
 
 ```php
 use SanderMuller\LaravelSolanaSdk\Facades\Solana;
-use SanderMuller\SolanaPhpSdk\Queue\ConfirmTransactionJob;
+use SanderMuller\LaravelSolanaSdk\Queue\ConfirmTransactionJob;
 
 $blockhash = Solana::latestBlockhash();
 $signature = Solana::sendTransaction($tx, [$payer]);
@@ -192,7 +193,8 @@ ConfirmTransactionJob::dispatch(
 ```
 
 Listen for `SanderMuller\SolanaPhpSdk\Events\TransactionConfirmed` and
-`TransactionExpired` in `EventServiceProvider`.
+`SanderMuller\SolanaPhpSdk\Events\TransactionExpired` in `EventServiceProvider`
+(events are SDK-side; only the Job moved to this wrapper).
 
 ## PubSub / WebSocket
 
