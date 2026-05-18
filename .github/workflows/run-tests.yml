@@ -32,7 +32,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { php: '8.3', laravel: '11.*', testbench: '9.*',  stability: prefer-lowest }
+          # Floor bumped from L11 to L12 because dev-only `laravel/pao ^1.0`
+          # requires laravel/framework >=12.0. Package code itself still
+          # supports L11 (see `illuminate/* ^11||^12||^13` in composer.json).
+          - { php: '8.3', laravel: '12.*', testbench: '10.*', stability: prefer-lowest }
           - { php: '8.4', laravel: '13.*', testbench: '11.*', stability: prefer-stable }
           - { php: '8.4', laravel: '12.*', testbench: '10.*', stability: prefer-stable }
           - { php: '8.3', laravel: '13.*', testbench: '11.*', stability: prefer-stable }
