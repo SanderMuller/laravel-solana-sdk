@@ -70,7 +70,7 @@
         "rector-dry-run": "vendor/bin/rector process --dry-run",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "sync-ai": "vendor/bin/testbench package-boost:sync || true",
+        "sync-ai": "vendor/bin/boost sync || true",
         "qa": [
             "@rector",
             "@format",
