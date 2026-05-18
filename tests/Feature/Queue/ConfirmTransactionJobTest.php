@@ -29,7 +29,7 @@ it('fires TransactionConfirmed when the signature status lands at the requested 
         context: ['order_id' => 99],
     );
 
-    $job->handle(app(Connection::class));
+    $job->handle(resolve(Connection::class));
 
     Event::assertDispatched(
         TransactionConfirmed::class,
@@ -54,7 +54,7 @@ it('fires TransactionExpired with FailedOnChain reason when getSignatureStatuses
     ]);
 
     $job = new ConfirmTransactionJob(signature: 'sig-fail', pollIntervalMs: 1);
-    $job->handle(app(Connection::class));
+    $job->handle(resolve(Connection::class));
 
     Event::assertDispatched(
         TransactionExpired::class,

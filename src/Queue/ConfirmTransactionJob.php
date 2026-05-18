@@ -2,11 +2,7 @@
 
 namespace SanderMuller\LaravelSolanaSdk\Queue;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use SanderMuller\SolanaPhpSdk\Connection;
 use SanderMuller\SolanaPhpSdk\Events\TransactionConfirmed;
 use SanderMuller\SolanaPhpSdk\Events\TransactionExpired;
@@ -27,10 +23,7 @@ use Throwable;
  */
 final class ConfirmTransactionJob implements ShouldQueue
 {
-    use Dispatchable;
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
+    use \Illuminate\Foundation\Queue\Queueable;
 
     /**
      * @param array<string, mixed> $context arbitrary payload re-emitted on the lifecycle event
